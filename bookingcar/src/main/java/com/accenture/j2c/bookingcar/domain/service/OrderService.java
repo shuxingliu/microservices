@@ -6,7 +6,7 @@
 package com.accenture.j2c.bookingcar.domain.service;
 
 import com.accenture.j2c.bookingcar.domain.entity.Entity;
-import com.accenture.j2c.bookingcar.domain.entity.User;
+import com.accenture.j2c.bookingcar.domain.entity.Order;
 import java.util.Collection;
 
 
@@ -14,21 +14,20 @@ import java.util.Collection;
  *
  * @author darren.shuxing.liu
  */
-public interface UserService {
+public interface OrderService {
+    /**
+     *
+     * @param order
+     * @throws Exception
+     */
+    public void add(Order order) throws Exception;
 
     /**
      *
-     * @param user
+     * @param order
      * @throws Exception
      */
-    public void add(User user) throws Exception;
-
-    /**
-     *
-     * @param user
-     * @throws Exception
-     */
-    public void update(User user) throws Exception;
+    public void update(Order order) throws Exception;
 
     /**
      *
@@ -39,17 +38,17 @@ public interface UserService {
 
     /**
      *
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    public Collection<Order> findByUserId(String userId) throws Exception;
+
+    /**
+     *
      * @param id
      * @return
      * @throws Exception
      */
-    public Entity findById(String id) throws Exception;
-
-    /**
-     *
-     * @param name
-     * @return
-     * @throws Exception
-     */
-    public Collection<User> findByName(String name) throws Exception;    
+    public Entity findById(String id) throws Exception;    
 }

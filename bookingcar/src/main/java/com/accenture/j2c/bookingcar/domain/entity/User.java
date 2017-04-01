@@ -10,6 +10,7 @@ import com.accenture.j2c.bookingcar.domain.vo.UserVO;
  *
  * @author darren.shuxing.liu
  * @email  darren.shuxing.liu@accenture.com shuxing.liu@gmail.com
+ * 用户实体
  */
 public class User extends Entity<String> {
 

@@ -5,9 +5,8 @@
  */
 package com.accenture.j2c.bookingcar.domain.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
+
 
 /**
  *
@@ -52,13 +51,5 @@ public interface DomainService<TE, T> {
      * @return
      * @throws Exception
      */
-    public Collection<TE> findByName(String name) throws Exception;
-
-    /**
-     *
-     * @param name
-     * @return
-     * @throws Exception
-     */
-    public Collection<TE> findByCriteria(Map<String, ArrayList<String>> name) throws Exception;
+    public Collection<TE> findByName(String name) throws Exception;    
 }

@@ -5,9 +5,9 @@
  */
 package com.accenture.j2c.bookingcar.controller;
 
-import com.accenture.j2c.bookingcar.domain.service.UserService;
-import com.accenture.j2c.bookingcar.domain.entity.User;
 import com.accenture.j2c.bookingcar.domain.entity.Entity;
+import com.accenture.j2c.bookingcar.domain.entity.Order;
+import com.accenture.j2c.bookingcar.domain.service.OrderService;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,15 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  *
  * @author darren.shuxing.liu
  * @email  darren.shuxing.liu@accenture.com shuxing.liu@gmail.com
  */
 @RestController
-@RequestMapping("/v1/user")
-public class UserController {
+@RequestMapping("/v1/order")
+public class OrderController {
 
     /**
      *
@@ -36,62 +35,63 @@ public class UserController {
     protected static final Logger logger = Logger.getLogger(UserController.class.getName());
 
     /**
-     *需要调用领域服务
+     *调用领域服务
      */
-    protected UserService userService;
+    protected OrderService orderService;
 
     /**
-     *
+     *OrderController的构造函数
      * @param userService
      */
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public OrderController(OrderService userService) {
+        this.orderService = userService;
     }
     
     /**
-     * 通过用户名称来获得用户. 
-     * http://.../v1/user?name={name}
-     * @param name
-     * @return 用户集合
+     * 通过用户ID来获得订单. 
+     * http://.../v1/order?userid={userid}
+     * @param userId
+     * @return 订单集合
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Collection<User>> findByName(@RequestParam("name") String name) {
-        logger.info(String.format("订车管理微服务，通过名字查找用户：invoked by {%s} , name = {%s} ", 
-                userService.getClass().getName(), name));
-        name = name.trim().toLowerCase();
-        Collection<User> users;
+    public ResponseEntity<Collection<Order>> findByName(@RequestParam("userid") String userId) {
+        logger.info(String.format("订车管理微服务，通过用户ID查找订单：invoked by {%s}, userId {%s}", 
+                orderService.getClass().getName(), userId));
+        userId = userId.trim();
+        Collection<Order> orders;
         try {
-            users = userService.findByName(name);
+            orders = orderService.findByUserId(userId);
         } catch (Exception ex) {
-            logger.log(Level.SEVERE, "异常 {0}", ex);
+            logger.log(Level.SEVERE, " 异常:{0} ", ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return users.size() > 0 ? new ResponseEntity<>(users, HttpStatus.OK)
+        return orders.size() > 0 ? new ResponseEntity<>(orders, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
     /**
-     * 通过id获取用户信息
-     * http://.../v1/user/{id}
+     * 通过id获取订单信息
+     * http://.../v1/order/{id}
      * 
      *
      * @param id
-     * @return 用户.
+     * @return 订单.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Entity> findById(@PathVariable("id") String id) {
-        logger.info(String.format("订车管理微服务，通过id查找用户：invoked by {%s} , name = {%s} ", 
-                userService.getClass().getName(), id));
+        logger.info(String.format("订车管理微服务，通过订单ID查找订单：invoked by {%s}, order id {%s} ", 
+                orderService.getClass().getName(), id));
         id = id.trim();
-        Entity user;
+        Entity order;
         try {
-            user = userService.findById(id);
+            order = orderService.findById(id);
         } catch (Exception ex) {
-            logger.log(Level.WARNING, "异常：通过ID查找用户 {0}", ex);
+            logger.log(Level.WARNING, "异常：{0} ", ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return user != null ? new ResponseEntity<>(user, HttpStatus.OK)
+        return order != null ? new ResponseEntity<>(order, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
+

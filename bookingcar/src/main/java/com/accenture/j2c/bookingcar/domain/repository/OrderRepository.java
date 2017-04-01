@@ -20,7 +20,7 @@ public interface OrderRepository<Order, String> extends Repository<Order, String
      * @return
      */
     boolean containsName(String name);
-
+    
     /**
      *
      * @param name
@@ -28,4 +28,12 @@ public interface OrderRepository<Order, String> extends Repository<Order, String
      * @throws Exception
      */
     public Collection<Order> findByName(String name) throws Exception;
+
+    /**
+     *
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    public Collection<Order> findByUserId(String userId) throws Exception;
 }

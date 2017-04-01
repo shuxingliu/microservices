@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * @author darren.shuxing.liu
  */
 public class Order extends Entity<String> {
-    private OrderVO orderVo;
+    private OrderVO orderVo = new OrderVO();
     private final String userId;
     private final String driverId;    
 

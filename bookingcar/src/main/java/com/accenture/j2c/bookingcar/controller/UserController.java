@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  *
  * @author darren.shuxing.liu
+ * @email  darren.shuxing.liu@accenture.com shuxing.liu@gmail.com
  */
 @RestController
 @RequestMapping("/v1/user")
@@ -35,7 +36,7 @@ public class UserController {
     protected static final Logger logger = Logger.getLogger(UserController.class.getName());
 
     /**
-     *
+     *需要调用领域服务
      */
     protected UserService userService;
 
@@ -56,13 +57,14 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Collection<User>> findByName(@RequestParam("name") String name) {
-        logger.info(String.format("订车管理微服务，通过名字查找用户：{%s} {%s} ", userService.getClass().getName(), name));
+        logger.info(String.format("订车管理微服务，通过名字查找用户：invoked by {%s} , name = {%s} ", 
+                userService.getClass().getName(), name));
         name = name.trim().toLowerCase();
         Collection<User> users;
         try {
             users = userService.findByName(name);
         } catch (Exception ex) {
-            logger.log(Level.SEVERE, "有异常发生", ex);
+            logger.log(Level.SEVERE, "异常 {0}", ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return users.size() > 0 ? new ResponseEntity<>(users, HttpStatus.OK)
@@ -79,7 +81,8 @@ public class UserController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Entity> findById(@PathVariable("id") String id) {
-        logger.info(String.format("订车管理微服务，通过ID查找用户：{%s} {%s} ", userService.getClass().getName(), id));
+        logger.info(String.format("订车管理微服务，通过id查找用户：invoked by {%s} , name = {%s} ", 
+                userService.getClass().getName(), id));
         id = id.trim();
         Entity user;
         try {

@@ -80,16 +80,7 @@ public class InMemUserRepository implements UserRepository<User, String> {
         }
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    @Override
-    public boolean contains(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     /**
      *
      * @param id

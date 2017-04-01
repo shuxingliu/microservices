@@ -5,7 +5,6 @@
  */
 package com.accenture.j2c.bookingcar.domain.repository;
 
-import java.util.Collection;
 
 /**
  *

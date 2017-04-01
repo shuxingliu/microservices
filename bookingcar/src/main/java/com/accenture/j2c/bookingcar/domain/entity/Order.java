@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 /**
  *
  * @author darren.shuxing.liu
+ * @email  darren.shuxing.liu@accenture.com shuxing.liu@gmail.com
+ * 订单实体
  */
 public class Order extends Entity<String> {
     private OrderVO orderVo = new OrderVO();

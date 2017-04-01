@@ -7,9 +7,8 @@ package com.accenture.j2c.bookingcar.domain.service;
 
 import com.accenture.j2c.bookingcar.domain.entity.Entity;
 import com.accenture.j2c.bookingcar.domain.entity.Order;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
+
 
 /**
  *
@@ -51,13 +50,5 @@ public interface OrderService {
      * @return
      * @throws Exception
      */
-    public Entity findById(String id) throws Exception;
-
-    /**
-     *
-     * @param name
-     * @return
-     * @throws Exception
-     */
-    public Collection<Order> findByCriteria(Map<String, ArrayList<String>> name) throws Exception;
+    public Entity findById(String id) throws Exception;    
 }

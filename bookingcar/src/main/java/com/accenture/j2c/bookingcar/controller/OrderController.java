@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  *
  * @author darren.shuxing.liu
+ * @email  darren.shuxing.liu@accenture.com shuxing.liu@gmail.com
  */
 @RestController
 @RequestMapping("/v1/order")
@@ -34,12 +35,12 @@ public class OrderController {
     protected static final Logger logger = Logger.getLogger(UserController.class.getName());
 
     /**
-     *
+     *调用领域服务
      */
     protected OrderService orderService;
 
     /**
-     *
+     *OrderController的构造函数
      * @param userService
      */
     @Autowired
@@ -49,19 +50,20 @@ public class OrderController {
     
     /**
      * 通过用户ID来获得订单. 
-     * http://.../v1/order?userid={id}
+     * http://.../v1/order?userid={userid}
      * @param userId
      * @return 订单集合
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Collection<Order>> findByName(@RequestParam("userid") String userId) {
-        logger.info(String.format("订车管理微服务，通过用户ID为%s的订单：{%s}  ", userId, orderService.getClass().getName()));
+        logger.info(String.format("订车管理微服务，通过用户ID查找订单：invoked by {%s}, userId {%s}", 
+                orderService.getClass().getName(), userId));
         userId = userId.trim();
         Collection<Order> orders;
         try {
             orders = orderService.findByUserId(userId);
         } catch (Exception ex) {
-            logger.log(Level.SEVERE, "有异常发生", ex);
+            logger.log(Level.SEVERE, " 异常:{0} ", ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return orders.size() > 0 ? new ResponseEntity<>(orders, HttpStatus.OK)
@@ -78,13 +80,14 @@ public class OrderController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Entity> findById(@PathVariable("id") String id) {
-        logger.info(String.format("订车管理微服务，通过ID查找订单：{%s} {%s} ", orderService.getClass().getName(), id));
+        logger.info(String.format("订车管理微服务，通过订单ID查找订单：invoked by {%s}, order id {%s} ", 
+                orderService.getClass().getName(), id));
         id = id.trim();
         Entity order;
         try {
             order = orderService.findById(id);
         } catch (Exception ex) {
-            logger.log(Level.WARNING, "异常：通过ID查找订单 {0}", ex);
+            logger.log(Level.WARNING, "异常：{0} ", ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return order != null ? new ResponseEntity<>(order, HttpStatus.OK)

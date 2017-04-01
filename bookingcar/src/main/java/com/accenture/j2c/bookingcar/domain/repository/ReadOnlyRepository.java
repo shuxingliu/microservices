@@ -16,14 +16,6 @@ import java.util.Collection;
  */
 public interface ReadOnlyRepository<TE, T> {
 
-    //long Count;
-    /**
-     *
-     * @param id
-     * @return
-     */
-    boolean contains(T id);
-
     /**
      *
      * @param id

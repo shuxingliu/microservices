@@ -34,7 +34,7 @@ public class InMemOrderRepository implements OrderRepository<Order, String> {
         Order order2 = new Order("2", "订单2", "1", "8","从北京到上海", LocalDate.now(), LocalTime.now(),new BigDecimal("888.00"));
         entities.put("2", order2);
         Order order3 = new Order("3", "订单3", "2", "8","从南山到福田", LocalDate.now(), LocalTime.now(),new BigDecimal("88.00"));
-        entities.put("2", order3);
+        entities.put("3", order3);
     }
 
     /**
@@ -84,16 +84,7 @@ public class InMemOrderRepository implements OrderRepository<Order, String> {
         }
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    @Override
-    public boolean contains(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     /**
      *
      * @param id

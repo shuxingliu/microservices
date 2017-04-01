@@ -10,10 +10,11 @@ import com.accenture.j2c.bookingcar.domain.vo.DriverVO;
  *
  * @author darren.shuxing.liu
  * @email  darren.shuxing.liu@accenture.com shuxing.liu@gmail.com
+ * 司机实体
  */
 public class Driver extends Entity<String> {
 
-    private DriverVO driverVo;
+    private DriverVO driverVo = new DriverVO();
     
 
     /**

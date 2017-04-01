@@ -8,9 +8,7 @@ package com.accenture.j2c.bookingcar.domain.service;
 import com.accenture.j2c.bookingcar.domain.entity.Entity;
 import com.accenture.j2c.bookingcar.domain.entity.Order;
 import com.accenture.j2c.bookingcar.domain.repository.OrderRepository;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,16 +88,5 @@ public class OrderServiceImpl extends BaseService<Order, String>
     @Override
     public Entity findById(String id) throws Exception {
         return orderRepository.get(id);
-    }
-
-    /**
-     *
-     * @param name
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public Collection<Order> findByCriteria(Map<String, ArrayList<String>> name) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

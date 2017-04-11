@@ -32,7 +32,7 @@ public class OrderController {
     /**
      *
      */
-    protected static final Logger logger = Logger.getLogger(UserController.class.getName());
+    protected static final Logger logger = Logger.getLogger(OrderController.class.getName());
 
     /**
      *调用领域服务
@@ -55,7 +55,7 @@ public class OrderController {
      * @return 订单集合
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Collection<Order>> findByName(@RequestParam("userid") String userId) {
+    public ResponseEntity<Collection<Order>> findByUserId(@RequestParam("userid") String userId) {
         logger.info(String.format("订车管理微服务，通过用户ID查找订单：invoked by {%s}, userId {%s}", 
                 orderService.getClass().getName(), userId));
         userId = userId.trim();

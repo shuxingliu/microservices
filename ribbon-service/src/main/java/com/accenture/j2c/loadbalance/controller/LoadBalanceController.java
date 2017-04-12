@@ -61,7 +61,7 @@ public class LoadBalanceController {
         logger.info(String.format("invoked by {%s}, port {%s}", 
                 lbService.getClass().getName(), servicePort));
         
-        String response = String.format("%s\r, response of service is as below:\r %s",
+        String response = String.format("%s, response: %s",
                 servicePort, serviceResponse);
         return response;
     }   

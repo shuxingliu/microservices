@@ -5,20 +5,20 @@
  */
 package com.accenture.j2c.gateway.filter;
 
+import com.netflix.client.Utils;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.DEBUG_FILTER_ORDER;
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.FORWARD_TO_KEY;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.SERVICE_ID_KEY;
 import org.springframework.stereotype.Component;
+import java.util.Base64;
 
 /**
  *
  * @author darren.shuxing.liu
- * Zuul的过滤功能，要重写虚拟函数filterType, filterOrder, run, shouldFilter
+ * Zuul的pre过滤功能，要重写虚拟函数filterType, filterOrder, run, shouldFilter
  */
 @Component
 public class BookingCarPreFilter extends ZuulFilter {
@@ -50,12 +50,8 @@ public class BookingCarPreFilter extends ZuulFilter {
     */
     @Override
     public boolean shouldFilter() {
-        /*
-        RequestContext ctx = RequestContext.getCurrentContext();
-        return !ctx.containsKey(FORWARD_TO_KEY) // a filter has already forwarded
-                && !ctx.containsKey(SERVICE_ID_KEY); // a filter has already determined serviceId
-        */
-        return true;
+        //增加自己的判断
+        return false;
     }
     
     /*
@@ -64,22 +60,46 @@ public class BookingCarPreFilter extends ZuulFilter {
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        HttpServletRequest request = ctx.getRequest();
-
-        logger.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
-        
-        Object accessToken = request.getParameter("token");
-        if(accessToken == null) {
-            logger.info("token is empty");
+        HttpServletRequest request = ctx.getRequest();     
+   
+        Object userid = request.getParameter("userid");
+        if(userid == null) {
+            logger.info("user id is null");
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(401);
             try {
-                ctx.getResponse().getWriter().write("token is empty");
+                ctx.getResponse().getWriter().write("user id cann't be null");
             }catch (Exception e){}
 
             return null;
         }
-        logger.info("ok");
+        //鉴权不通过，返回
+        if(!auth(userid.toString())) {
+            ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(402);   
+            try {
+                ctx.getResponse().getWriter().write("User didn't pass authorization");
+            }catch (Exception e){}
+            return null; 
+        }
+            
+        //鉴权通过后，将user id转为Token加入到Zuul的请求头
+        String accesstoken = encode(userid.toString());
+        logger.info(String.format("pre routing, token = {%s}", accesstoken));
+        ctx.addZuulRequestHeader("Authorization", accesstoken);        
+
+        logger.info("added token to zuul request");
         return null;
     }
+    
+    private String encode(String origin) {
+        byte[] encodedBytes = Base64.getEncoder().encode(origin.getBytes());
+        return new String(encodedBytes);
+    }
+    
+    //可以在此增加自己的鉴权逻辑
+    private boolean auth(String userid) {
+        return true;
+    }
+            
 }

@@ -51,7 +51,7 @@ public class BookingCarPreFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         //增加自己的判断
-        return false;
+        return true;
     }
     
     /*

@@ -70,6 +70,8 @@ public class OrderController {
                 : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
+        
+    
     /**
      * 通过id获取订单信息
      * http://.../v1/order/{id}
@@ -92,6 +94,26 @@ public class OrderController {
         }
         return order != null ? new ResponseEntity<>(order, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    
+    /**
+     * 数据服务
+     * 通过Order ID来获得订单名称. 
+     * http://.../v1/order/name/{id}
+     * @param id
+     * @return 订单名称
+     */
+    @RequestMapping(value = "/name/{id}", method = RequestMethod.GET)
+    public String getOrderName(@PathVariable("id") String id) {
+        id = id.trim();
+        Entity order;
+        try {
+            order = orderService.findById(id);
+        } catch (Exception ex) {
+            return "Exception happened";
+        }
+        return order != null ? order.getName() : "No such order";        
     }
 }
 

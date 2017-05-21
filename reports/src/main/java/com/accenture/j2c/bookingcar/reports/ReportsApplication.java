@@ -9,7 +9,6 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableFeignClients
-//@ComponentScan(basePackageClasses = OrderClient.class)
 public class ReportsApplication {
 
 	public static void main(String[] args) {

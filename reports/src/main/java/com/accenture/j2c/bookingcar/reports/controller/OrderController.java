@@ -5,7 +5,6 @@
  */
 package com.accenture.j2c.bookingcar.reports.controller;
 
-import com.accenture.j2c.bookingcar.reports.clientinterface.LBTestClient;
 import com.accenture.j2c.bookingcar.reports.clientinterface.OrderClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

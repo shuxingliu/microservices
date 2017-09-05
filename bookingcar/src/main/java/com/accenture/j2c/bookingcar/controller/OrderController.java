@@ -44,8 +44,8 @@ public class OrderController {
      * @param userService
      */
     @Autowired
-    public OrderController(OrderService userService) {
-        this.orderService = userService;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
     }
     
     /**
